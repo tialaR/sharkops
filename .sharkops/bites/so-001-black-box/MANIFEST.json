@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "SO-001",
+  "name": "Black Box",
+  "slug": "so-001-black-box",
+  "status": "DRAFT",
+  "revision": 1,
+  "reversible": true,
+  "createdAt": "2026-08-24T23:54:54.092Z"
+}

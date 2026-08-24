@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "bites": [
+    {
+      "id": "SO-001",
+      "name": "Black Box",
+      "slug": "so-001-black-box",
+      "status": "DRAFT"
+    }
+  ]
+}
