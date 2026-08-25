@@ -1,0 +1,34 @@
+name: SharkOps CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version:
+          - 20
+          - 22
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Verify engine contract
+        run: node bin/sharkops.mjs verify
+
+      - name: Verify package portability
+        run: npm run test:smoke
