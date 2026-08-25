@@ -1,0 +1,20 @@
+                    /\
+                   /  \
+          ________/    \
+     ____/               \___
+ ___/      SHARKOPS          \__
+/______________________________\
+   reversible bites · executable gates
+
+🦈 SHARKOPS  ATTACK CONTROL
+
+Commands
+
+  sharkops init      Initialize SharkOps in a repository
+  sharkops status    Show current project state
+  sharkops doctor    Check SharkOps structure
+  sharkops verify    Verify the installed contract
+  sharkops new       Create a new reversible bite
+
+No silent deviation. Every approved rule becomes a gate.
+

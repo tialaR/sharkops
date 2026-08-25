@@ -1,0 +1,20 @@
+                    /\
+                   /  \
+          ________/    \
+     ____/               \___
+ ___/      SHARKOPS          \__
+/______________________________\
+   reversible bites · executable gates
+
+🦈 SHARKOPS STATUS  TARGET ACQUIRED
+
+Project:       sharkops-standalone
+Phase:         SharkOps initialized
+Last bite:     none
+Next bite:     SO-001 | Black Box
+Architecture:  unclassified
+Knowledge:     repository-backed
+Updated:       2026-08-24T23:45:57.127Z
+
+Attack posture: controlled. No silent deviation authorized.
+

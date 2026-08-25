@@ -16,11 +16,13 @@ export const ui = {
 
 export function logo() {
   return [
-    ui.cyan('        /\\'),
-    ui.cyan('   ____/  \\____'),
-    ui.cyan('  /   SHARKOPS  \\__'),
-    ui.cyan('  \\____  ___  ____/'),
-    ui.cyan('       \\/   \\/'),
+    ui.cyan('                    /\\'),
+    ui.cyan('                   /  \\'),
+    ui.cyan('          ________/    \\'),
+    ui.cyan('     ____/               \\___'),
+    ui.cyan(' ___/      SHARKOPS          \\__'),
+    ui.cyan('/______________________________\\'),
+    ui.muted('   reversible bites · executable gates'),
   ].join('\n');
 }
 
