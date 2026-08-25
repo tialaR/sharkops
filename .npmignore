@@ -1,0 +1,5 @@
+.git/
+.sharkops/
+examples/
+*.log
+.DS_Store
