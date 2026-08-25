@@ -67,7 +67,13 @@ That makes the change itself, its validation and its recovery path part of the s
 ## CLI
 
 <p align="center">
-  <img src="./docs/readme/assets/sharkops-doctor-cli.png" alt="SharkOps doctor command validating the CLI structure" width="860" />
+  <img src="./docs/readme/assets/sharkops-doctor-cli.png" alt="SharkOps doctor command validating the CLI structure" width="760" />
+</p>
+
+The CLI is not only descriptive. It also creates controlled architectural work:
+
+<p align="center">
+  <img src="./docs/readme/assets/sharkops-new-bite-cli.png" alt="SharkOps creating a new reversible bite" width="620" />
 </p>
 
 ```bash
@@ -240,6 +246,20 @@ See also:
 
 * [Architecture](./docs/ARCHITECTURE.md)
 * [SharkOps workflow](./docs/sharkops/SHARKOPS.md)
+
+## What SharkOps proves
+
+For a recruiter or engineering reviewer, the repository demonstrates more than CLI implementation:
+
+- architectural decisions translated into executable constraints;
+- controlled changes with explicit rollback paths;
+- separation between reusable tooling and project-specific rules;
+- package portability verified outside the source repository;
+- technical decisions documented with rationale and trade-offs.
+
+The value is not the shark metaphor itself.
+
+The value is making engineering decisions visible, testable and defensible.
 
 ## Philosophy
 
