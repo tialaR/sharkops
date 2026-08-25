@@ -1,26 +1,32 @@
 import { exists, readJson } from '../core/io.mjs';
+import { isEngineRepository } from '../core/context.mjs';
 import { heading, pass, fail, ui } from '../core/ui.mjs';
 
 export function runVerify() {
   heading('🦈 SHARKOPS VERIFY', 'BITE INSPECTION');
 
-  const requiredFiles = [
+  const hostFiles = [
     'package.json',
-    'bin/sharkops.mjs',
     '.sharkops/project.json',
     '.sharkops/state/current-state.json',
     '.sharkops/state/bite-ledger.json',
+  ];
+
+  const engineFiles = [
+    'bin/sharkops.mjs',
     'src/core/io.mjs',
     'src/core/ui.mjs',
+    'src/core/context.mjs',
     'src/commands/init.mjs',
     'src/commands/status.mjs',
     'src/commands/doctor.mjs',
-    'src/commands/verify.mjs'
+    'src/commands/verify.mjs',
+    'src/commands/new-bite.mjs',
   ];
 
   let breached = false;
 
-  for (const file of requiredFiles) {
+  for (const file of hostFiles) {
     if (exists(file)) {
       pass(file);
     } else {
@@ -29,13 +35,24 @@ export function runVerify() {
     }
   }
 
-  const pkg = readJson('package.json');
+  if (isEngineRepository()) {
+    for (const file of engineFiles) {
+      if (exists(file)) {
+        pass(file);
+      } else {
+        fail(file);
+        breached = true;
+      }
+    }
 
-  if (pkg.bin?.sharkops === './bin/sharkops.mjs') {
-    pass('package bin sharkops');
-  } else {
-    fail('package bin sharkops');
-    breached = true;
+    const pkg = readJson('package.json');
+
+    if (pkg.bin?.sharkops === './bin/sharkops.mjs') {
+      pass('package bin sharkops');
+    } else {
+      fail('package bin sharkops');
+      breached = true;
+    }
   }
 
   const project = readJson('.sharkops/project.json');
