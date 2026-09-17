@@ -1,11 +1,11 @@
 # 🦈 SharkOps
 
 <p align="center">
-  <strong>Architecture recovery and project governance through reversible bites and executable gates.</strong>
+  <strong>Architecture recovery and project governance through repository-backed state, reversible bite scaffolding and executable structural verification.</strong>
 </p>
 
 <p align="center">
-  Turn architectural decisions into repository-backed state, controlled change packages and verification that actually runs.
+  Turn technical decisions into visible project state, controlled change packages and checks that actually run.
 </p>
 
 ---
@@ -16,15 +16,40 @@
   <img src="./docs/readme/assets/sharkops-flow-overview.svg" alt="SharkOps flow at a glance showing init, new, verify, status, plus the bite lifecycle scripts and repository-backed state." width="960" />
 </p>
 
-SharkOps keeps the current alpha surface intentionally small and explicit: initialize the repository, create a bite, verify the contract and inspect the current state.
+SharkOps `0.1.0-alpha` keeps the surface intentionally small and explicit: initialize the repository, record project state, create a reversible bite skeleton, inspect the current state, run structural diagnostics and verify the installed SharkOps contract.
+
+## Current alpha scope
+
+What is implemented today:
+
+- a standalone Node.js CLI;
+- `init`, `status`, `doctor`, `verify` and `new`;
+- repository-owned state under `.sharkops/`;
+- a bite ledger and current-state file;
+- reversible bite scaffolding with `MANIFEST.json`, `apply.sh`, `verify.sh` and `rollback.sh`;
+- structural verification of the installed SharkOps contract;
+- package portability verification in a fresh external repository;
+- CI on Node.js 20 and 22.
+
+What is **not** implemented as a first-class CLI capability yet:
+
+- `sharkops apply`;
+- `sharkops rollback`;
+- automatic execution of generated bite lifecycle scripts;
+- dynamic loading and execution of rich project-specific architectural policies;
+- automatic progression of project state based on bite execution.
+
+Those are directions the architecture can grow into, not capabilities this alpha claims to ship.
 
 ## Why SharkOps exists
 
 Architecture rarely breaks because a team has no rules.
 
-It breaks because important decisions gradually become scattered across chats, tickets, documentation and memory, while refactors continue moving underneath them.
+It breaks because important decisions gradually become scattered across chats, tickets, documentation and memory, while refactors keep moving underneath them.
 
-SharkOps approaches that problem differently:
+SharkOps approaches that problem by keeping operational state close to the code and making the recovery workflow explicit.
+
+The longer-term operating model is:
 
 ```text
 decision
@@ -33,7 +58,7 @@ repository-backed state
    ↓
 reversible bite
    ↓
-executable verification
+verification
    ↓
 registered result
 ```
@@ -42,9 +67,11 @@ The goal is simple:
 
 > **Reduce technical decision load so developers can focus on product.**
 
-SharkOps is intentionally opinionated. Important architectural decisions should become inspectable, reproducible and, when worth protecting, executable.
+SharkOps is intentionally opinionated, but the alpha does not pretend to automate every architectural decision. It provides a small engine and a repository-backed structure on top of which stronger project-specific contracts can be built.
 
 ## The workflow
+
+The conceptual workflow is:
 
 ```text
 IDENTIFY
@@ -60,17 +87,17 @@ REGISTER
 ROLLBACK
 ```
 
-Instead of treating architectural recovery as a sequence of irreversible edits, SharkOps organizes controlled changes into **bites**.
+This is the **operating model**, not a one-to-one list of CLI commands.
 
-A bite starts with three explicit lifecycle operations:
+Today, `sharkops new` creates a bite skeleton containing three explicit lifecycle scripts:
 
 ```text
-apply
-verify
-rollback
+apply.sh
+verify.sh
+rollback.sh
 ```
 
-That makes the change itself, its validation and its recovery path part of the same unit of work.
+In `0.1.0-alpha`, these scripts are project-owned scaffolds. SharkOps creates them, marks the bite as reversible and records it in the ledger, but does not yet expose `apply` or `rollback` as first-class CLI commands or automatically execute those scripts.
 
 ## CLI
 
@@ -78,7 +105,7 @@ That makes the change itself, its validation and its recovery path part of the s
   <img src="./docs/readme/assets/sharkops-doctor-cli.png" alt="SharkOps doctor command validating the CLI structure" width="760" />
 </p>
 
-The CLI is not only descriptive. It also creates controlled architectural work:
+The current CLI surface is deliberately small:
 
 <p align="center">
   <img src="./docs/readme/assets/sharkops-new-bite-cli.png" alt="SharkOps creating a new reversible bite" width="620" />
@@ -94,29 +121,31 @@ sharkops new
 
 ### `init`
 
-Installs SharkOps state into an existing repository.
+Creates the `.sharkops/` project structure, initial state and empty bite ledger without modifying existing project contracts.
 
 ### `status`
 
-Shows the current operational state, including the latest and next planned bite.
+Reads and displays the current recorded SharkOps state from `.sharkops/state/current-state.json`.
 
 ### `doctor`
 
-Checks whether the SharkOps installation and engine structure are healthy.
+Checks whether the expected SharkOps files and structure are present. Inside the SharkOps engine repository, it also checks the engine's own command/core files.
 
 ### `verify`
 
-Runs the installed contract and reports architectural or structural breaches.
+Verifies the installed SharkOps structural contract: required files, package bin wiring, project engine identity and bite-ledger shape.
+
+It does **not** yet behave as a general-purpose project architecture rule engine.
 
 ### `new`
 
-Creates a new reversible bite with its lifecycle already explicit.
+Creates a reversible bite skeleton, records it in the bite ledger and generates `apply.sh`, `verify.sh` and `rollback.sh` placeholders ready for project-specific implementation.
 
 ## Quick start
 
 **Requirement:** Node.js 20 or newer.
 
-The current alpha can be installed directly from GitHub:
+Install the current alpha directly from GitHub:
 
 ```bash
 npm install --save-dev github:tialaR/sharkops
@@ -128,7 +157,7 @@ Initialize it inside a repository:
 npx sharkops init
 ```
 
-Inspect the state:
+Inspect the recorded state and installation:
 
 ```bash
 npx sharkops status
@@ -160,6 +189,8 @@ SharkOps creates project-owned state similar to:
         └── reports/
 ```
 
+The generated lifecycle scripts are intentionally minimal scaffolds in the current alpha. Their payload, verification and rollback logic must be implemented by the host project.
+
 ## Engine and host project stay separate
 
 SharkOps deliberately separates reusable tooling from the architecture of the repository using it.
@@ -169,7 +200,7 @@ SharkOps engine
       │
       ├── CLI
       ├── generic commands
-      └── verification infrastructure
+      └── structural verification
              │
              ▼
 Host repository
@@ -177,39 +208,33 @@ Host repository
       └── .sharkops/
             ├── project state
             ├── bite ledger
-            ├── reversible bites
-            └── project-specific contracts
+            ├── reversible bite scaffolds
+            └── future/project-owned contracts
 ```
 
 The engine does not need to understand the application's internal architecture.
 
 The host project remains the owner of its own rules.
 
-This boundary keeps SharkOps portable while allowing each repository to turn its particular architectural decisions into enforceable contracts.
+This boundary keeps SharkOps portable while leaving room for each repository to grow stronger project-specific contracts without coupling them to the engine.
 
 **[Architecture →](./docs/ARCHITECTURE.md)**
 
 ## Executable governance
 
-SharkOps treats repository state as part of engineering governance.
+SharkOps is designed around a direction: important engineering decisions should move closer to repository-backed state and executable verification instead of living only in memory, chat or prose.
 
-The intent is not to accumulate checks.
+The current alpha already proves the infrastructure for that direction through:
 
-It is to close the gap between:
+- repository-owned state;
+- bite scaffolding;
+- structural contract verification;
+- package portability testing;
+- CI execution.
 
-```text
-"We decided this."
-```
+Richer rules such as dependency boundaries, migration policies, ownership constraints or other project-specific architectural checks are **not provided as a generic rule engine in this alpha**. They remain a direction for host-owned contracts and future evolution.
 
-and:
-
-```text
-"The repository can prove whether this is still true."
-```
-
-That can include structural boundaries, migration rules, ownership constraints, forbidden dependencies or any other project decision that can be verified deterministically.
-
-> **No silent deviation. Every approved rule becomes a gate.**
+> **No silent deviation** is the design principle, not a claim that every possible rule is automatically enforced today.
 
 ## Portability is tested
 
@@ -219,7 +244,7 @@ The repository includes a package-level smoke test:
 npm run test:smoke
 ```
 
-The test packages SharkOps, installs it into a fresh external repository and exercises the standalone workflow:
+The test packages SharkOps, installs it into a fresh temporary repository and exercises the standalone workflow:
 
 ```text
 package
@@ -255,25 +280,28 @@ See also:
 * [Architecture](./docs/ARCHITECTURE.md)
 * [SharkOps workflow](./docs/sharkops/SHARKOPS.md)
 
-## What SharkOps proves
+## What SharkOps proves today
 
-For a recruiter or engineering reviewer, the repository demonstrates more than CLI implementation:
+For a recruiter or engineering reviewer, the repository demonstrates:
 
-- architectural decisions translated into executable constraints;
-- controlled changes with explicit rollback paths;
-- separation between reusable tooling and project-specific rules;
+- a real standalone CLI with five implemented commands;
+- repository-backed operational state;
+- reversible change scaffolding with an explicit recovery path;
+- clear separation between reusable tooling and host-project state;
+- executable structural verification;
 - package portability verified outside the source repository;
-- technical decisions documented with rationale and trade-offs.
+- CI on multiple Node.js versions;
+- architecture decisions documented with rationale and trade-offs.
 
-The value is not the shark metaphor itself.
+It does **not** claim that the current alpha already automates the full lifecycle of architectural change.
 
-The value is making engineering decisions visible, testable and defensible.
+The value is making that lifecycle more explicit, inspectable and easier to evolve into stronger executable contracts.
 
 ## Philosophy
 
 * **No silent deviation.**
 * Important architectural decisions should not live only in memory or conversation history.
-* Validated rules should become executable contracts when practical.
+* Rules worth protecting should move toward executable contracts when practical.
 * Recovery should be designed alongside risky change.
 * Project-specific rules belong to the host repository.
 * Tooling should reduce human decision load, not create another job.
@@ -305,7 +333,7 @@ SharkOps
 
 **`0.1.0-alpha`**
 
-Standalone core:
+Available now:
 
 * `init`
 * `status`
@@ -313,12 +341,19 @@ Standalone core:
 * `verify`
 * `new`
 * repository-backed state
+* bite ledger
 * reversible bite scaffolding
-* executable engine verification
+* structural engine/installation verification
 * external package portability smoke test
 * CI on Node.js 20 and 22
 
-The alpha scope is deliberately small: prove the governance model and package boundary before expanding the surface area.
+Still evolving:
+
+* first-class execution commands for bite lifecycle operations;
+* richer host-project architectural contracts;
+* automatic state progression and lifecycle orchestration.
+
+The alpha scope is deliberately small: prove the CLI, repository boundary, state model and portability before expanding the surface area.
 
 ## Repository structure
 
@@ -340,7 +375,7 @@ MIT
 
 <p align="center">
   <strong>🦈 SharkOps</strong><br />
-  Reversible bites · executable gates · no silent deviation
+  Reversible bites · repository-backed state · executable verification
 </p>
 
 <p align="center">
