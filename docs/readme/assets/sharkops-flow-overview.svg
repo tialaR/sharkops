@@ -1,0 +1,27 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1200" height="760" rx="24" fill="#0B1020"/>
+<rect x="32" y="32" width="1136" height="696" rx="20" fill="#11182D" stroke="#26324F" stroke-width="2"/>
+<text x="70" y="100" fill="#F5F7FB" font-family="Arial,sans-serif" font-size="42" font-weight="700">🦈 SharkOps — flow at a glance</text>
+<text x="70" y="142" fill="#A9B6D3" font-family="Arial,sans-serif" font-size="22">Repository-backed architecture recovery through reversible bites and executable gates.</text>
+
+<g font-family="Arial,sans-serif">
+<rect x="70" y="190" width="180" height="120" rx="18" fill="#15203A" stroke="#3B4D78" stroke-width="2"/>
+<text x="100" y="230" fill="#6DE0B7" font-size="22" font-weight="700">1. init</text><text x="100" y="264" fill="#F5F7FB" font-size="20">Install state</text>
+
+<rect x="310" y="190" width="180" height="120" rx="18" fill="#15203A" stroke="#3B4D78" stroke-width="2"/>
+<text x="340" y="230" fill="#6DE0B7" font-size="22" font-weight="700">2. new</text><text x="340" y="264" fill="#F5F7FB" font-size="20">Create a bite</text>
+
+<rect x="550" y="190" width="180" height="120" rx="18" fill="#15203A" stroke="#3B4D78" stroke-width="2"/>
+<text x="580" y="230" fill="#6DE0B7" font-size="22" font-weight="700">3. verify</text><text x="580" y="264" fill="#F5F7FB" font-size="20">Run contract</text>
+
+<rect x="790" y="190" width="180" height="120" rx="18" fill="#15203A" stroke="#3B4D78" stroke-width="2"/>
+<text x="820" y="230" fill="#6DE0B7" font-size="22" font-weight="700">4. status</text><text x="820" y="264" fill="#F5F7FB" font-size="20">Inspect state</text>
+
+<path d="M250 250H302M490 250H542M730 250H782" stroke="#6B7DA6" stroke-width="4"/>
+<text x="70" y="390" fill="#F5F7FB" font-size="28" font-weight="700">What a bite contains</text>
+<text x="90" y="450" fill="#D7E0F6" font-size="22">apply.sh   →   verify.sh   →   rollback.sh</text>
+<text x="70" y="520" fill="#F5F7FB" font-size="28" font-weight="700">Repository-backed state</text>
+<text x="90" y="575" fill="#D7E0F6" font-size="22">.sharkops/  project.json  state/  bites/</text>
+<text x="70" y="680" fill="#7F92B7" font-size="18">Current alpha surface shown faithfully: init, new, verify, status, and bite lifecycle scripts.</text>
+</g>
+</svg>

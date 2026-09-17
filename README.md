@@ -10,6 +10,14 @@
 
 ---
 
+## Flow at a glance
+
+<p align="center">
+  <img src="./docs/readme/assets/sharkops-flow-overview.svg" alt="SharkOps flow at a glance showing init, new, verify, status, plus the bite lifecycle scripts and repository-backed state." width="960" />
+</p>
+
+SharkOps keeps the current alpha surface intentionally small and explicit: initialize the repository, create a bite, verify the contract and inspect the current state.
+
 ## Why SharkOps exists
 
 Architecture rarely breaks because a team has no rules.
@@ -28,7 +36,7 @@ reversible bite
 executable verification
    ↓
 registered result
-````
+```
 
 The goal is simple:
 
