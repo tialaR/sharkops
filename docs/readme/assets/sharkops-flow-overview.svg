@@ -1,8 +1,14 @@
 <svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect width="1200" height="760" rx="24" fill="#0B1020"/>
 <rect x="32" y="32" width="1136" height="696" rx="20" fill="#11182D" stroke="#26324F" stroke-width="2"/>
-<text x="70" y="100" fill="#F5F7FB" font-family="Arial,sans-serif" font-size="42" font-weight="700">🦈 SharkOps — flow at a glance</text>
-<text x="70" y="142" fill="#A9B6D3" font-family="Arial,sans-serif" font-size="22">Repository-backed architecture recovery through reversible bites and executable gates.</text>
+
+<!-- Shark fin mark -->
+<path d="M74 104C86 73 103 53 128 42C123 67 128 88 143 105C121 98 98 98 74 104Z" fill="#2EA8FF"/>
+<path d="M72 112C95 106 118 108 140 117C116 119 95 123 78 132C83 123 81 117 72 112Z" fill="#1B72D8"/>
+<path d="M80 137C100 127 120 124 142 125C126 137 108 145 88 149C91 143 88 139 80 137Z" fill="#35B8FF"/>
+
+<text x="165" y="100" fill="#F5F7FB" font-family="Arial,sans-serif" font-size="42" font-weight="700">SharkOps — flow at a glance</text>
+<text x="70" y="154" fill="#A9B6D3" font-family="Arial,sans-serif" font-size="22">Repository-backed architecture recovery through reversible bites and executable gates.</text>
 
 <g font-family="Arial,sans-serif">
 <rect x="70" y="190" width="180" height="120" rx="18" fill="#15203A" stroke="#3B4D78" stroke-width="2"/>
